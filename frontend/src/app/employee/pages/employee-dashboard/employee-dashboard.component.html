@@ -1,0 +1,63 @@
+<app-dashboard-shell
+  title="Employee Dashboard"
+  [greeting]="greeting"
+  subtitle="Your profile is loaded directly from the backend using your token."
+  role="employee"
+  (logoutClicked)="logout()"
+>
+  <section class="panel" *ngIf="errorMessage">
+    <p class="error-text">{{ errorMessage }}</p>
+  </section>
+
+  <section class="panel" *ngIf="record; else employeeEmpty">
+    <h2>My Details</h2>
+    <div class="identity-card">
+      <article>
+        <span>Name</span>
+        <strong>{{ record.name }}</strong>
+      </article>
+      <article>
+        <span>Email</span>
+        <strong>{{ record.email }}</strong>
+      </article>
+      <article>
+        <span>Department</span>
+        <strong>{{ record.department || 'N/A' }}</strong>
+      </article>
+      <article>
+        <span>Designation</span>
+        <strong>{{ record.designation || 'N/A' }}</strong>
+      </article>
+      <article>
+        <span>Phone</span>
+        <strong>{{ record.phone || 'N/A' }}</strong>
+      </article>
+    </div>
+  </section>
+
+  <ng-template #employeeEmpty>
+    <section class="panel" *ngIf="fallbackUser; else noEmployeeData">
+      <h2>My Account</h2>
+      <div class="identity-card">
+        <article>
+          <span>Name</span>
+          <strong>{{ fallbackUser.name }}</strong>
+        </article>
+        <article>
+          <span>Email</span>
+          <strong>{{ fallbackUser.email }}</strong>
+        </article>
+        <article>
+          <span>Role</span>
+          <strong>{{ fallbackUser.role }}</strong>
+        </article>
+      </div>
+    </section>
+  </ng-template>
+
+  <ng-template #noEmployeeData>
+    <section class="panel">
+      <p class="empty-state">Employee details were not returned by the backend.</p>
+    </section>
+  </ng-template>
+</app-dashboard-shell>

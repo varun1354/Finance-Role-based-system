@@ -1,0 +1,33 @@
+<section class="login-page">
+  <div class="login-card">
+    <div class="login-copy">
+      <span class="badge">FRBAS Portal</span>
+      <h1>Finance Data Processing and Access Control Portal</h1>
+      <p>Sign in with your account to reach the dashboard that matches your backend role.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+      <label>
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="you@example.com">
+      </label>
+      <p class="error-text" *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+        Enter a valid email address.
+      </p>
+
+      <label>
+        <span>Password</span>
+        <input type="password" formControlName="password" placeholder="Enter your password">
+      </label>
+      <p class="error-text" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+        Password must be at least 6 characters.
+      </p>
+
+      <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button class="btn-primary submit-btn" type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Signing in...' : 'Login' }}
+      </button>
+    </form>
+  </div>
+</section>

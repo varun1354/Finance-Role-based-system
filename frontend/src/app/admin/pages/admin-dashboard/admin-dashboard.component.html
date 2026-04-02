@@ -1,0 +1,131 @@
+<app-dashboard-shell
+  title="Admin Dashboard"
+  [greeting]="greeting"
+  subtitle="Global view of users, employee records, and recent access activity."
+  role="admin"
+  (logoutClicked)="logout()"
+>
+  <section class="count-grid">
+    <article class="stat-card">
+      <span>Employees</span>
+      <strong>{{ employeeCount }}</strong>
+    </article>
+    <article class="stat-card">
+      <span>Analysts</span>
+      <strong>{{ analystCount }}</strong>
+    </article>
+    <article class="stat-card">
+      <span>Inactive Users</span>
+      <strong>{{ inactiveCount }}</strong>
+    </article>
+  </section>
+
+  <section class="table-panel">
+    <h2>Workforce Directory</h2>
+    <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
+    <p class="empty-state" *ngIf="!directoryRows.length && !isLoading">No user records returned by the backend.</p>
+    <table class="responsive-table" *ngIf="directoryRows.length">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Phone</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Financial Overview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let row of directoryRows">
+        <tr>
+          <td>{{ row.name }}</td>
+          <td>{{ row.email }}</td>
+          <td>{{ row.department }}</td>
+          <td>{{ row.designation }}</td>
+          <td>{{ row.phone }}</td>
+          <td><span class="badge">{{ row.role }}</span></td>
+          <td>
+            <div class="status-cell">
+              <span class="status-value">{{ row.status }}</span>
+              <button
+                type="button"
+                class="status-action"
+                [disabled]="row.isUpdating || row.id === getCurrentUserId()"
+                (click)="toggleUserStatus(row)"
+              >
+                {{
+                  row.id === getCurrentUserId()
+                    ? 'Current user'
+                    : row.isUpdating
+                      ? 'Saving...'
+                      : row.status === 'active'
+                        ? 'Deactivate'
+                        : 'Activate'
+                }}
+              </button>
+            </div>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="icon-action"
+              title="View Financial Overview"
+              (click)="toggleFinancialOverview(row)"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 5C6.5 5 2.1 8.4 1 12c1.1 3.6 5.5 7 11 7s9.9-3.4 11-7c-1.1-3.6-5.5-7-11-7Zm0 11.5A4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 0 1 0 9Zm0-2.5A2 2 0 1 0 12 10a2 2 0 0 0 0 4Z" />
+              </svg>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="row.isOverviewOpen" class="overview-row">
+          <td colspan="8">
+            <div class="overview-panel">
+              <h3>Financial Overview</h3>
+              <p class="empty-state" *ngIf="row.isOverviewLoading">Loading financial overview...</p>
+              <p class="error-text" *ngIf="row.overviewError">{{ row.overviewError }}</p>
+              <div class="count-grid compact-grid" *ngIf="row.overview && !row.isOverviewLoading">
+                <article class="stat-card">
+                  <span>Total Income</span>
+                  <strong>{{ formatCurrency(row.overview.totalIncome) }}</strong>
+                </article>
+                <article class="stat-card">
+                  <span>Total Expenses</span>
+                  <strong>{{ formatCurrency(row.overview.totalExpenses) }}</strong>
+                </article>
+                <article class="stat-card">
+                  <span>Net Balance</span>
+                  <strong>{{ formatCurrency(row.overview.netBalance) }}</strong>
+                </article>
+              </div>
+              <table class="responsive-table" *ngIf="row.overview?.recentTransactions?.length">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let transaction of row.overview?.recentTransactions">
+                    <td>{{ transaction.category }}</td>
+                    <td>{{ transaction.type }}</td>
+                    <td>{{ formatCurrency(transaction.amount) }}</td>
+                    <td>{{ transaction.date | date: 'mediumDate' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="empty-state" *ngIf="row.overview && !row.overview.recentTransactions.length">
+                No financial records available for this employee.
+              </p>
+            </div>
+          </td>
+        </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </section>
+</app-dashboard-shell>

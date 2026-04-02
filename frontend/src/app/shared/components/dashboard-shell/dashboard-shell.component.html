@@ -1,0 +1,12 @@
+<div class="dashboard-page">
+  <div class="dashboard-header">
+    <div>
+      <span class="badge">{{ role | titlecase }}</span>
+      <h1>{{ greeting || title }}</h1>
+      <p>{{ subtitle }}</p>
+    </div>
+    <button class="btn-secondary" type="button" (click)="logoutClicked.emit()">Logout</button>
+  </div>
+
+  <ng-content></ng-content>
+</div>

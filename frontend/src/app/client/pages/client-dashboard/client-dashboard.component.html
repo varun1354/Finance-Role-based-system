@@ -1,0 +1,35 @@
+<app-dashboard-shell
+  title="Client Dashboard"
+  [greeting]="greeting"
+  subtitle="Basic account information only, with no access to internal employee records."
+  role="client"
+  (logoutClicked)="logout()"
+>
+  <section class="panel" *ngIf="errorMessage">
+    <p class="error-text">{{ errorMessage }}</p>
+  </section>
+
+  <section class="panel" *ngIf="client; else clientEmpty">
+    <h2>My Account</h2>
+    <div class="identity-card">
+      <article>
+        <span>Name</span>
+        <strong>{{ client.name }}</strong>
+      </article>
+      <article>
+        <span>Email</span>
+        <strong>{{ client.email }}</strong>
+      </article>
+      <article>
+        <span>Role</span>
+        <strong>{{ client.role }}</strong>
+      </article>
+    </div>
+  </section>
+
+  <ng-template #clientEmpty>
+    <section class="panel">
+      <p class="empty-state">Client details were not returned by the backend.</p>
+    </section>
+  </ng-template>
+</app-dashboard-shell>
