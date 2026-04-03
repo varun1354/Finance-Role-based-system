@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 app.disable('etag');
 app.use(
   cors({
-    origin: ['http://localhost:4200'],
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   })
