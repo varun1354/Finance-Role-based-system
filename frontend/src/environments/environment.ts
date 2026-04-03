@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
-  apiBaseUrl: 'http://localhost:5000/api',
+  production: true,
+  apiBaseUrl: 'https://finance-role-based-system.onrender.com/api',
   loginActivityPath: '/login-activity'
 };
