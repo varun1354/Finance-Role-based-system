@@ -15,7 +15,10 @@ const port = process.env.PORT || 5000;
 app.disable('etag');
 app.use(
   cors({
-    origin: '*',
+    origin: [
+      'http://localhost:4200',
+      'https://finance-role-based-system-797itp4y9-varuns-projects-2fc1af1d.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
   })
