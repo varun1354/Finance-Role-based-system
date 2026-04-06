@@ -17,6 +17,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:4200',
+       'https://finance-role-based-system.vercel.app',
       'https://finance-role-based-system-797itp4y9-varuns-projects-2fc1af1d.vercel.app'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
