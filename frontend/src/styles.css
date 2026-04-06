@@ -225,3 +225,144 @@ a {
 .compact-grid {
   margin-bottom: 1rem;
 }
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 900px) {
+  .dashboard-page {
+    padding: 20px 16px 32px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.25rem;
+  }
+
+  .dashboard-header .btn-secondary {
+    align-self: flex-start;
+  }
+
+  .count-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-page {
+    padding: 16px 12px 28px;
+  }
+
+  .dashboard-header {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .dashboard-header p {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .dashboard-header .btn-secondary {
+    width: 100%;
+  }
+
+  .count-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .stat-card,
+  .panel,
+  .table-panel {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .stat-card strong {
+    font-size: 2rem;
+  }
+
+  .panel h2,
+  .table-panel h2 {
+    font-size: 1.5rem;
+  }
+
+  .directory-table,
+  .directory-table thead,
+  .directory-table tbody,
+  .directory-table th,
+  .directory-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .directory-table thead {
+    display: none;
+  }
+
+  .directory-table tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .directory-table tr {
+    display: block;
+    border: 1px solid #e5edf4;
+    border-radius: 16px;
+    background: #fdfefe;
+    overflow: hidden;
+  }
+
+  .directory-table td {
+    padding: 12px 14px;
+  }
+
+  .directory-table td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .directory-table .overview-row {
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .directory-table .overview-row td {
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .directory-table .overview-row td::before {
+    display: none;
+  }
+
+  .overview-panel {
+    padding: 14px;
+    border: 1px solid #dce7f5;
+    border-radius: 14px;
+    background: #f8fbff;
+  }
+
+  .compact-table {
+    min-width: 420px;
+  }
+}
