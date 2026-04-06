@@ -24,7 +24,7 @@
     <h2>Workforce Directory</h2>
     <p class="error-text" *ngIf="errorMessage">{{ errorMessage }}</p>
     <p class="empty-state" *ngIf="!directoryRows.length && !isLoading">No user records returned by the backend.</p>
-    <table class="responsive-table" *ngIf="directoryRows.length">
+    <table class="responsive-table directory-table" *ngIf="directoryRows.length">
       <thead>
         <tr>
           <th>Name</th>
@@ -40,13 +40,13 @@
       <tbody>
         <ng-container *ngFor="let row of directoryRows">
         <tr>
-          <td>{{ row.name }}</td>
-          <td>{{ row.email }}</td>
-          <td>{{ row.department }}</td>
-          <td>{{ row.designation }}</td>
-          <td>{{ row.phone }}</td>
-          <td><span class="badge">{{ row.role }}</span></td>
-          <td>
+          <td data-label="Name">{{ row.name }}</td>
+          <td data-label="Email">{{ row.email }}</td>
+          <td data-label="Department">{{ row.department }}</td>
+          <td data-label="Designation">{{ row.designation }}</td>
+          <td data-label="Phone">{{ row.phone }}</td>
+          <td data-label="Role"><span class="badge">{{ row.role }}</span></td>
+          <td data-label="Status">
             <div class="status-cell">
               <span class="status-value">{{ row.status }}</span>
               <button
@@ -67,7 +67,7 @@
               </button>
             </div>
           </td>
-          <td>
+          <td data-label="Financial Overview">
             <button
               type="button"
               class="icon-action"
@@ -100,7 +100,8 @@
                   <strong>{{ formatCurrency(row.overview.netBalance) }}</strong>
                 </article>
               </div>
-              <table class="responsive-table" *ngIf="row.overview?.recentTransactions?.length">
+              <div class="table-scroll" *ngIf="row.overview?.recentTransactions?.length">
+              <table class="responsive-table compact-table">
                 <thead>
                   <tr>
                     <th>Category</th>
@@ -111,13 +112,14 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let transaction of row.overview?.recentTransactions">
-                    <td>{{ transaction.category }}</td>
-                    <td>{{ transaction.type }}</td>
-                    <td>{{ formatCurrency(transaction.amount) }}</td>
-                    <td>{{ transaction.date | date: 'mediumDate' }}</td>
+                    <td data-label="Category">{{ transaction.category }}</td>
+                    <td data-label="Type">{{ transaction.type }}</td>
+                    <td data-label="Amount">{{ formatCurrency(transaction.amount) }}</td>
+                    <td data-label="Date">{{ transaction.date | date: 'mediumDate' }}</td>
                   </tr>
                 </tbody>
               </table>
+              </div>
               <p class="empty-state" *ngIf="row.overview && !row.overview.recentTransactions.length">
                 No financial records available for this employee.
               </p>
